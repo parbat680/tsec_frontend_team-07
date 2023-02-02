@@ -3,8 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:tsec_app/controllers/auth_controller.dart';
 import 'package:tsec_app/views/auth/login_screen.dart';
 import 'package:tsec_app/views/auth/otp_screen.dart';
+import 'package:tsec_app/views/home/home.dart';
+import 'package:tsec_app/views/home/profileSetup/userDetails.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -16,6 +20,7 @@ void main() async {
   } catch (e) {
     log("Firebase not Initialized ...");
   }
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 
@@ -30,7 +35,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: OtpScreen(),
+      home: LoaderOverlay(
+        child: UserDetailsScreen(),
+      ),
     );
   }
 }

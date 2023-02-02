@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:tsec_app/controllers/auth_controller.dart';
 
 import '../../network/otp_verify.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   RxBool isDisabled = true.obs;
+
   TextEditingController _phone = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  AuthController _authController = AuthController.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: key,
+        key: formKey,
         child: Container(
           margin: EdgeInsets.all(20),
           child: Column(
@@ -66,8 +76,11 @@ class LoginScreen extends StatelessWidget {
               Obx(() => ElevatedButton(
                     onPressed: isDisabled.value
                         ? null
-                        : () {
-                            OtpVerification.authenticateUser(_phone.text);
+                        : () async {
+                            context.loaderOverlay.show();
+                            // OtpVerification.authenticateUser(_phone.text);
+                            await _authController.verifyPhone(_phone.text);
+                            context.loaderOverlay.hide();
                           },
                     style: ElevatedButton.styleFrom(
                       shape: StadiumBorder(),

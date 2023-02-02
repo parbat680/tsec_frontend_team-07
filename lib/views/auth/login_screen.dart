@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../network/otp_verify.dart';
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   RxBool isDisabled = true.obs;
+  TextEditingController _phone = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   @override
@@ -31,6 +34,7 @@ class LoginScreen extends StatelessWidget {
                 height: 40,
               ),
               TextFormField(
+                controller: _phone,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   label: Text("phone"),
@@ -60,7 +64,11 @@ class LoginScreen extends StatelessWidget {
                 height: 20,
               ),
               Obx(() => ElevatedButton(
-                    onPressed: isDisabled.value ? null : () {},
+                    onPressed: isDisabled.value
+                        ? null
+                        : () {
+                            OtpVerification.authenticateUser(_phone.text);
+                          },
                     style: ElevatedButton.styleFrom(
                       shape: StadiumBorder(),
                       minimumSize: Size(double.infinity, 50),

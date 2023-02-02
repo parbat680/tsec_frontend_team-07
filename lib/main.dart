@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:tsec_app/views/login_screen.dart';
+import 'package:tsec_app/views/auth/login_screen.dart';
+import 'package:tsec_app/views/auth/otp_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
   try {
+    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: OtpScreen(),
     );
   }
 }

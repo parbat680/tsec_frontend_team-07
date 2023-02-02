@@ -74,7 +74,7 @@ class UserDetailsScreen extends StatelessWidget {
             steps: [
               Step(
                 title: Text(''),
-                content: PreferencesScreen(),
+                content: UserInfoScreen(),
                 isActive: _currentStep.value >= 0,
                 state: _currentStep.value > 0
                     ? StepState.complete

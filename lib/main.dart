@@ -3,16 +3,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tsec_app/controllers/auth_controller.dart';
 import 'package:tsec_app/views/auth/login_screen.dart';
-import 'package:tsec_app/views/auth/otp_screen.dart';
-import 'package:tsec_app/views/home/home.dart';
+
 import 'package:tsec_app/views/home/profileSetup/userDetails.dart';
 import 'firebase_options.dart';
 
 void main() async {
   try {
+    await GetStorage.init();
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: LoaderOverlay(
-        child: HomeScreen(),
+        child: LoginScreen(),
       ),
     );
   }

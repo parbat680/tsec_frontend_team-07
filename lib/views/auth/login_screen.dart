@@ -80,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             context.loaderOverlay.show();
                             // OtpVerification.authenticateUser(_phone.text);
                             await _authController.verifyPhone(_phone.text);
+                            await _authController.UserAuthApi(_phone.text);
                             context.loaderOverlay.hide();
                           },
                     style: ElevatedButton.styleFrom(

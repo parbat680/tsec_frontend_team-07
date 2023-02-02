@@ -105,8 +105,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   ? CircleAvatar(
                       backgroundImage:
                           AssetImage('assets/images/profile_default.png'),
+                      backgroundColor: Colors.white,
                     )
-                  : CircleAvatar(backgroundImage: FileImage(_image!)),
+                  : CircleAvatar(
+                      backgroundImage: FileImage(_image!),
+                      backgroundColor: Colors.white,
+                    ),
             ),
             Positioned(
               bottom: 0.0,

@@ -50,7 +50,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     'Food Preference': [],
   }.obs;
 
-  RxInt appt = 0.obs;
+  RxInt appt = 1.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +79,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             runSpacing: 4.0,
             children: roomMatePrefs.value.entries.map((entry) {
               log(entry.toString());
+              log(appt.value.toString());
               return Container(
                 child: Wrap(
                   spacing: 8.0,
@@ -94,12 +95,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             }).toList(),
           ),
         ),
-        SizedBox(
-          height: 20,
-        ),
         OutlinedButton(
-          onPressed: () {
-            showRoommateDialog(context);
+          onPressed: () async {
+            await showRoommateDialog(context);
+            setState(() {});
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -122,8 +121,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           () => Wrap(
             spacing: 8.0,
             runSpacing: 4.0,
-            children: roomMatePrefs.value.entries.map((entry) {
-              log(entry.toString());
+            children: appartmentPrefs.value.entries.map((entry) {
               return Container(
                 child: Wrap(
                   spacing: 8.0,
@@ -139,12 +137,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             }).toList(),
           ),
         ),
-        SizedBox(
-          height: 20,
-        ),
         OutlinedButton(
-          onPressed: () {
-            showApartmentDialog(context);
+          onPressed: () async {
+            await showApartmentDialog(context);
+            setState(() {});
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -154,6 +150,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             ],
           ),
           style: OutlinedButton.styleFrom(shape: StadiumBorder()),
+        ),
+        SizedBox(
+          height: 20,
         )
       ],
     );

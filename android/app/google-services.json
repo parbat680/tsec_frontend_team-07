@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "453504375672",
+    "project_id": "tsec-c553d",
+    "storage_bucket": "tsec-c553d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453504375672:android:22adee34690cf02ecc068d",
+        "android_client_info": {
+          "package_name": "com.example.tsec_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453504375672-e2jakhq6q70dh6np4m786tkllinc7g2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf7zh-zIZZVi6rXTx9SC9vDlfvqzcJ8ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453504375672-e2jakhq6q70dh6np4m786tkllinc7g2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

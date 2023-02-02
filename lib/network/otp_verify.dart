@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tsec_app/views/auth/otp_screen.dart';
 import 'package:tsec_app/views/home/home.dart';
+import 'package:tsec_app/views/home/profileSetup/userDetails.dart';
 import 'package:tsec_app/views/widgets/botttom_sanckbar.dart';
 
 class OtpVerification {
@@ -31,7 +32,7 @@ class OtpVerification {
 
       await FirebaseAuth.instance
           .signInWithCredential(credential)
-          .then((value) => Get.offAll(HomeScreen()));
+          .then((value) => Get.offAll(UserDetailsScreen()));
     } catch (e) {
       showBottomSnack(title: "Error", message: "Otp verification failed");
     }

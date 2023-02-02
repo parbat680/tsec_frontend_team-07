@@ -7,10 +7,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextField(
-        keyboardType: TextInputType.name,
-      ),
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      body: SafeArea(
+          child: ListView(
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage:
+                    AssetImage('/assets/images/profile_default.png'),
+                radius: 30,
+              ),
+              Text(
+                "Roommate App",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )
+        ],
+      )),
     );
   }
 }

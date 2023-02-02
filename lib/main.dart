@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: LoaderOverlay(
-        child: UserDetailsScreen(),
+        child: HomeScreen(),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserInfoScreen extends StatefulWidget {
@@ -73,6 +74,20 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     }
   }
 
+  RxString dropdownvalue = 'male'.obs;
+
+  // List of gender in our dropdown menu
+  var gender = [
+    'male',
+    'female',
+    'rather not say',
+  ];
+
+  RxString age = '18 - 24'.obs;
+
+  // List of gender in our dropdown menu
+  var ageList = ['18 - 24', '25 - 30', '30 -40 ', '40 and above'];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -84,7 +99,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           alignment: Alignment.center,
           child: Stack(children: [
             Container(
-              margin: const EdgeInsets.only(top: 20),
               width: width / 2,
               height: height * 0.2,
               child: _image == null
@@ -121,6 +135,98 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           "Enter your name",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        TextFormField(
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            label: Text("Name"),
+            hintText: "eg. John doe",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            prefixIcon: Icon(Icons.person),
+          ),
+          validator: (value) {},
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          "Choose Your gender",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(width: 1.0, color: Colors.grey)),
+          child: DropdownButton(
+            hint: Text('gender'),
+            value: dropdownvalue.value,
+            isExpanded: true,
+            underline: Divider(
+              height: 0,
+              color: Colors.transparent,
+            ),
+            alignment: Alignment.bottomRight,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            menuMaxHeight: 200,
+            items: gender.map((String items) {
+              return DropdownMenuItem(value: items, child: Text(items));
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownvalue.value = newValue!;
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          "Choose Your Age",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(width: 1.0, color: Colors.grey)),
+          child: DropdownButton(
+            hint: Text('Age'),
+            value: age.value,
+            isExpanded: true,
+            underline: Divider(
+              height: 0,
+              color: Colors.transparent,
+            ),
+            alignment: Alignment.bottomRight,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            menuMaxHeight: 200,
+            items: ageList.map((String items) {
+              return DropdownMenuItem(value: items, child: Text(items));
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                age.value = newValue!;
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          height: 20,
         ),
       ],
     );

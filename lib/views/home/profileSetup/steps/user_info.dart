@@ -6,6 +6,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tsec_app/controllers/profile_controller.dart';
 
 class UserInfoScreen extends StatefulWidget {
   UserInfoScreen({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class UserInfoScreen extends StatefulWidget {
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
   File? _image;
+
+  ProfileController _profileController = ProfileController.instance;
 
   PopupSelector(context) {
     showModalBottomSheet(
@@ -59,6 +62,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     final picked = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (picked != null) {
+      _profileController.uploadImage = _image;
       setState(() {
         _image = File(picked.path);
       });
@@ -68,22 +72,20 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   _galleryPick() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (picked != null) {
+      _profileController.uploadImage = _image;
+
       setState(() {
         _image = File(picked.path);
       });
     }
   }
 
-  RxString dropdownvalue = 'male'.obs;
-
   // List of gender in our dropdown menu
-  var gender = [
+  var genderChoice = [
     'male',
     'female',
     'rather not say',
   ];
-
-  RxString age = '18 - 24'.obs;
 
   // List of gender in our dropdown menu
   var ageList = ['18 - 24', '25 - 30', '30 -40 ', '40 and above'];
@@ -144,7 +146,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           height: 20,
         ),
         TextFormField(
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.name,
+          controller: _profileController.name,
           decoration: InputDecoration(
             label: Text("Name"),
             hintText: "eg. John doe",
@@ -173,7 +176,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               border: Border.all(width: 1.0, color: Colors.grey)),
           child: DropdownButton(
             hint: Text('gender'),
-            value: dropdownvalue.value,
+            value: _profileController.gender.value,
             isExpanded: true,
             underline: Divider(
               height: 0,
@@ -182,12 +185,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             alignment: Alignment.bottomRight,
             icon: const Icon(Icons.keyboard_arrow_down),
             menuMaxHeight: 200,
-            items: gender.map((String items) {
+            items: genderChoice.map((String items) {
               return DropdownMenuItem(value: items, child: Text(items));
             }).toList(),
             onChanged: (String? newValue) {
               setState(() {
-                dropdownvalue.value = newValue!;
+                _profileController.gender.value = newValue!;
               });
             },
           ),
@@ -210,7 +213,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               border: Border.all(width: 1.0, color: Colors.grey)),
           child: DropdownButton(
             hint: Text('Age'),
-            value: age.value,
+            value: _profileController.age.value,
             isExpanded: true,
             underline: Divider(
               height: 0,
@@ -224,7 +227,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             }).toList(),
             onChanged: (String? newValue) {
               setState(() {
-                age.value = newValue!;
+                _profileController.age.value = newValue!;
               });
             },
           ),

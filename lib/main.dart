@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tsec_app/controllers/auth_controller.dart';
+import 'package:tsec_app/controllers/profile_controller.dart';
 import 'package:tsec_app/views/auth/login_screen.dart';
+import 'package:tsec_app/views/home/home.dart';
 
 import 'package:tsec_app/views/home/profileSetup/userDetails.dart';
 import 'firebase_options.dart';
@@ -22,11 +24,13 @@ void main() async {
     log("Firebase not Initialized ...");
   }
   Get.put(AuthController());
-  runApp(const MyApp());
+  Get.put(ProfileController());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  GetStorage box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,9 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: LoaderOverlay(
-        child: LoginScreen(),
+        child: box.read('auth-token') == null
+            ? LoginScreen()
+            : UserDetailsScreen(),
       ),
     );
   }

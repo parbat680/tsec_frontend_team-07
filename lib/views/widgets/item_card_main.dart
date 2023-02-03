@@ -1,21 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tsec_app/models/apartment.dart';
 import 'package:tsec_app/views/home/detail_apartment.dart';
 
 class ItemCardMain extends StatelessWidget {
-  ItemCardMain({Key? key}) : super(key: key);
+  ItemCardMain({Key? key, required this.apartment}) : super(key: key);
 
+  Apartment apartment;
   List<IconData> chipIcons = [
     Icons.bed,
     Icons.bathtub,
     Icons.square_foot,
     Icons.wifi
   ];
+
+  List<String> ameneties = [];
+
   @override
   Widget build(BuildContext context) {
+    ameneties.addAll(
+        [apartment.bhk.toString(), "1", apartment.area.toString(), "1"]);
     return Container(
-      height: 300,
+      height: 370,
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
@@ -23,7 +30,9 @@ class ItemCardMain extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => DetailApartmentScreen());
+          Get.to(() => DetailApartmentScreen(
+                apartment: apartment,
+              ));
         },
         child: Container(
           margin: EdgeInsets.all(10),
@@ -32,11 +41,11 @@ class ItemCardMain extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(),
-                height: 150,
+                height: 200,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/images/sofa.png',
+                    child: Image.network(
+                      apartment.images![0],
                       fit: BoxFit.fill,
                     )),
               ),
@@ -61,7 +70,7 @@ class ItemCardMain extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "₹ 10,000",
+                          "₹ ${apartment.rent}",
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -75,11 +84,13 @@ class ItemCardMain extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      "Goddev, Bhayander East, Thane",
+                      '${apartment.address!.addressLine1},${apartment.address!.addressLine2}',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Wrap(
                       spacing: 10,
@@ -87,7 +98,7 @@ class ItemCardMain extends StatelessWidget {
                       children: chipIcons
                           .map(
                             (e) => Chip(
-                              label: Text('2'),
+                              label: Text(ameneties[chipIcons.indexOf(e)]),
                               avatar: InkWell(
                                 onTap: () {},
                                 child: Icon(

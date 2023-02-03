@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tsec_app/models/apartment.dart';
+import 'package:tsec_app/network/api/search_rooms.dart';
+import 'package:tsec_app/views/widgets/item_card_main.dart';
 
 class SearchRoomDelegate extends SearchDelegate {
   @override
@@ -25,92 +28,52 @@ class SearchRoomDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
-    // return FutureBuilder(
-    //     future: fetch.FetchForQuery(query),
-    //     builder: (BuildContext context, AsyncSnapshot<List<venue>> snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return getshimmer();
-    //       } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-    //         return Center(
-    //           child: Column(
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: [
-    //               const SizedBox(
-    //                 height: 50,
-    //               ),
-    //               Flexible(
-    //                 child: Image.asset(
-    //                   'assets/images/notfoundimage.png',
-    //                   height: 200,
-    //                 ),
-    //               ),
-    //               const SizedBox(
-    //                 height: 20,
-    //               ),
-    //               Text("No Turfs Found!",
-    //                   style: GoogleFonts.poppins(fontSize: 20)),
-    //             ],
-    //           ),
-    //         );
-    //       } else if (snapshot.hasData) {
-    //         return CustomScrollView(slivers: [
-    //           SliverList(
-    //             delegate: SliverChildListDelegate(List.generate(
-    //                     snapshot.data!.length,
-    //                     (index) => TurfHomeCard(v: snapshot.data![index]))
-    //                 .toList()),
-    //           ),
-    //         ]);
-    //       }
-    //       return Text(snapshot.error.toString());
-    //     });
+    return FutureBuilder(
+        future: FetchSearch.get(query),
+        builder: ((BuildContext c, AsyncSnapshot<List<Apartment>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: ((context, index) {
+                  return ItemCardMain(
+                    apartment: snapshot.data![index],
+                  );
+                }));
+          }
+
+          return Text(snapshot.data.toString());
+        }));
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     return Column(
       children: [
-        Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Trending Searches    ",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                    ),
-                    const WidgetSpan(
-                      child: Icon(Icons.trending_up_sharp, size: 24),
-                    ),
-                  ],
+        Expanded(
+          child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Trending Searches    ",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w400),
+                      ),
+                      const WidgetSpan(
+                        child: Icon(Icons.trending_up_sharp, size: 24),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )),
-        // ListView.builder(
-        //   shrinkWrap: true,
-        //   physics: const NeverScrollableScrollPhysics(),
-        //   itemCount: searchTerms.length,
-        //   itemBuilder: ((context, index) {
-        //     return Card(
-        //       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        //       child: ListTile(
-        //         title: Text(searchTerms[index]),
-        //         trailing: IconButton(
-        //           onPressed: () {},
-        //           icon: const Icon(
-        //             Icons.clear,
-        //             color: Colors.grey,
-        //             size: 20,
-        //           ),
-        //         ),
-        //       ),
-        //     );
-        //   }),
-        // )
+              )),
+        ),
       ],
     );
   }

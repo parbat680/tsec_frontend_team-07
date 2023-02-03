@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:tsec_app/controllers/profile_controller.dart';
 
 class PreferencesScreen extends StatefulWidget {
   PreferencesScreen({Key? key}) : super(key: key);
@@ -14,11 +15,22 @@ class PreferencesScreen extends StatefulWidget {
 }
 
 class _PreferencesScreenState extends State<PreferencesScreen> {
+  ProfileController _profileController = ProfileController.instance;
+
   Map<String, List<String>> RoomMate = {
     'Gender': ['Male', 'Female'],
     'Rate': ['below 10K', '10K - 15K', '15K - 20K', '20K and above'],
     'Age': ['18 - 24', '25 - 30', '30 -40 ', '40 and above'],
     'Food Preference': ['Veg', 'Non-Veg', 'Jain'],
+    'Your hobbies': [
+      'singing',
+      'dancing',
+      'reading',
+      'literature',
+      'music',
+      'games',
+      'sports',
+    ]
   };
 
   Map<String, List<String>> appartment = {
@@ -35,20 +47,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       'Restaurant'
     ],
   };
-
-  RxMap<String, List<dynamic>> appartmentPrefs = {
-    'BHK': [],
-    'Bathroom': [],
-    'Internet': [],
-    'Near By': [],
-  }.obs;
-
-  RxMap<String, List<dynamic>> roomMatePrefs = {
-    'Gender': [],
-    'Rate': [],
-    'Age': [],
-    'Food Preference': [],
-  }.obs;
 
   RxInt appt = 1.obs;
 
@@ -77,7 +75,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           () => Wrap(
             spacing: 8.0,
             runSpacing: 4.0,
-            children: roomMatePrefs.value.entries.map((entry) {
+            children:
+                _profileController.roomMatePrefs.value.entries.map((entry) {
               log(entry.toString());
               log(appt.value.toString());
               return Container(
@@ -121,7 +120,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           () => Wrap(
             spacing: 8.0,
             runSpacing: 4.0,
-            children: appartmentPrefs.value.entries.map((entry) {
+            children:
+                _profileController.appartmentPrefs.value.entries.map((entry) {
               return Container(
                 child: Wrap(
                   spacing: 8.0,
@@ -173,7 +173,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                   showRoomPrefTile(0, "Gender"),
                   showRoomPrefTile(1, "Rate"),
                   showRoomPrefTile(2, "Age"),
-                  showRoomPrefTile(3, "Food Preference")
+                  showRoomPrefTile(3, "Food Preference"),
+                  showRoomPrefTile(4, "Your hobbies")
                 ]),
           );
         });
@@ -212,7 +213,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                     .value
                     .map((e) => CheckboxListTile(
                           title: Text(e),
-                          value: roomMatePrefs.value.entries
+                          value: _profileController.roomMatePrefs.value.entries
                               .elementAt(index)
                               .value
                               .contains(e),
@@ -220,7 +221,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             if (newValue!) {
                               setState(
                                 () {
-                                  roomMatePrefs.value.entries
+                                  _profileController.roomMatePrefs.value.entries
                                       .elementAt(index)
                                       .value
                                       .add(e);
@@ -229,14 +230,14 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             } else if (!newValue) {
                               setState(
                                 () {
-                                  roomMatePrefs.value.entries
+                                  _profileController.roomMatePrefs.value.entries
                                       .elementAt(index)
                                       .value
                                       .remove(e);
                                 },
                               );
                             }
-                            log(roomMatePrefs.toString());
+                            log(_profileController.roomMatePrefs.toString());
                             log(newValue.toString());
                           },
                           controlAffinity: ListTileControlAffinity
@@ -259,7 +260,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                     .value
                     .map((e) => CheckboxListTile(
                           title: Text(e),
-                          value: appartmentPrefs.value.entries
+                          value: _profileController
+                              .appartmentPrefs.value.entries
                               .elementAt(index)
                               .value
                               .contains(e),
@@ -267,7 +269,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             if (newValue!) {
                               setState(
                                 () {
-                                  appartmentPrefs.value.entries
+                                  _profileController
+                                      .appartmentPrefs.value.entries
                                       .elementAt(index)
                                       .value
                                       .add(e);
@@ -276,14 +279,15 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             } else if (!newValue) {
                               setState(
                                 () {
-                                  appartmentPrefs.value.entries
+                                  _profileController
+                                      .appartmentPrefs.value.entries
                                       .elementAt(index)
                                       .value
                                       .remove(e);
                                 },
                               );
                             }
-                            log(appartmentPrefs.toString());
+                            log(_profileController.appartmentPrefs.toString());
                             log(newValue.toString());
                           },
                           controlAffinity: ListTileControlAffinity

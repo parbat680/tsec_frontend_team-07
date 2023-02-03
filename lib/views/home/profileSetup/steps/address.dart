@@ -38,7 +38,8 @@ class AddressScreen extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        showText('', 'Zip Code', Icons.home),
+        showText('', 'Zip Code', Icons.home,
+            keyboardType: TextInputType.number),
         SizedBox(
           height: 20,
         ),

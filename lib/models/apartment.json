@@ -1,0 +1,39 @@
+[
+  {
+    "phone": "",
+    "gender": "",
+
+    "startRent": "",
+    "endRent": "",
+    "address": {
+      "addressLine1": "",
+      "addressLine2": "",
+      "city": "",
+      "state": "",
+      "pincode": ""
+    },
+    "images": [""],
+    "area": 0,
+
+    "bhk": 0
+  },
+
+  {
+    "address": {
+      "addressLine1": "B/22,Plot 132",
+      "addressLine2": "Vrindavan CHS, Gorai 2,Borivali West",
+      "city": "Mumbai ",
+      "state": "Maharashtra",
+      "pincode": "400092"
+    },
+    "_id": "63dbad86c53bc3f1b57a4dfb",
+    "phone": "+919372269353",
+    "gender": "Male",
+    "rent": "20000-30000",
+    "images": [
+      "https://book2play.el.r.appspot.com/turf2.jpeg_1675341188371undefined.jpeg",
+      "https://book2play.el.r.appspot.com/124599239309 (4).png_1675341188372undefined.png"
+    ],
+    "__v": 0
+  }
+]

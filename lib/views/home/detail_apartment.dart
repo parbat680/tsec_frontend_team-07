@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:panorama/panorama.dart';
+import 'package:tsec_app/models/apartment.dart';
+import 'package:tsec_app/views/home/panorama.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailApartmentScreen extends StatelessWidget {
-  DetailApartmentScreen({Key? key}) : super(key: key);
+  DetailApartmentScreen({Key? key, required this.apartment}) : super(key: key);
+
+  Apartment apartment;
 
   List<IconData> chipIcons = [
     Icons.bed,
@@ -9,8 +16,12 @@ class DetailApartmentScreen extends StatelessWidget {
     Icons.square_foot,
     Icons.wifi
   ];
+  List<String> ameneties = [];
+
   @override
   Widget build(BuildContext context) {
+    ameneties.addAll(
+        [apartment.bhk.toString(), "1", apartment.area.toString(), "1"]);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -20,8 +31,8 @@ class DetailApartmentScreen extends StatelessWidget {
               expandedHeight: 250.0,
               floating: true,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  'assets/images/sofa.png',
+                background: Image.network(
+                  apartment.images![0],
                   height: 80,
                   fit: BoxFit.fill,
                 ),
@@ -59,9 +70,25 @@ class DetailApartmentScreen extends StatelessWidget {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            showIconColumn(Icons.location_on, "Map View"),
-                            showIconColumn(
-                                Icons.panorama_photosphere, "Panorama"),
+                            GestureDetector(
+                              onTap: () {
+                                String url =
+                                    "https://www.google.com/maps/search/?api=1&query='${apartment.address!.addressLine1}, ${apartment.address!.addressLine2}, ${apartment.address!.city} - ${apartment.address!.pincode}";
+                                launchUrl(
+                                  Uri.parse(url),
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              },
+                              child:
+                                  showIconColumn(Icons.location_on, "Map View"),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => PanoramaScreen());
+                              },
+                              child: showIconColumn(
+                                  Icons.panorama_photosphere, "Panorama"),
+                            ),
                             showIconColumn(Icons.category, "Nearby"),
                           ]),
                     ),
@@ -69,7 +96,7 @@ class DetailApartmentScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "₹ 10,000",
+                          "₹ ${apartment.rent}",
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -85,7 +112,7 @@ class DetailApartmentScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      "57G, Sai Charan Complex, Goddev, Bhayander East, Thane - 401105",
+                      "${apartment.address!.addressLine1}, ${apartment.address!.addressLine2}, ${apartment.address!.city} - ${apartment.address!.pincode}",
                       style: TextStyle(
                         color: Color(0xff6f6f6f),
                         fontSize: 14,
@@ -102,7 +129,7 @@ class DetailApartmentScreen extends StatelessWidget {
                       children: chipIcons
                           .map(
                             (e) => Chip(
-                              label: Text('2'),
+                              label: Text(ameneties[chipIcons.indexOf(e)]),
                               avatar: InkWell(
                                 onTap: () {},
                                 child: Icon(
@@ -177,16 +204,25 @@ class DetailApartmentScreen extends StatelessWidget {
                             color: Colors.orangeAccent,
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.green, width: 1.6),
-                          ),
-                          child: Icon(
-                            Icons.call,
-                            color: Colors.green,
+                        GestureDetector(
+                          onTap: () {
+                            launchUrl(
+                              Uri(scheme: 'tel', path: apartment.phone),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border:
+                                  Border.all(color: Colors.green, width: 1.6),
+                            ),
+                            child: Icon(
+                              Icons.call,
+                              color: Colors.green,
+                            ),
                           ),
                         ),
                       ],

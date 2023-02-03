@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tsec_app/controllers/profile_controller.dart';
 
 import 'package:tsec_app/views/home/home.dart';
 import 'package:tsec_app/views/home/profileSetup/steps/address.dart';
@@ -11,6 +12,7 @@ import 'package:tsec_app/views/home/profileSetup/steps/user_info.dart';
 class UserDetailsScreen extends StatelessWidget {
   UserDetailsScreen({Key? key}) : super(key: key);
 
+  ProfileController _profileController = ProfileController.instance;
   RxInt _currentStep = 0.obs;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,10 @@ class UserDetailsScreen extends StatelessWidget {
           () => Stepper(
             controlsBuilder: (c, _) => ElevatedButton(
               onPressed: () {
-                _currentStep.value += 1;
+                if (_currentStep.value == 2) {
+                  _profileController.createProfile(context: context);
+                } else
+                  _currentStep.value += 1;
               },
               style: ElevatedButton.styleFrom(
                 shape: StadiumBorder(),

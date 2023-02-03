@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:tsec_app/models/roommate.dart';
 
 class RoomMateTile extends StatelessWidget {
-  const RoomMateTile({Key? key}) : super(key: key);
+  const RoomMateTile({Key? key, required this.roomMate}) : super(key: key);
 
+  final RoomMate roomMate;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +44,7 @@ class RoomMateTile extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "Rachna Patel",
+                    roomMate.user1Phone.toString(),
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -94,7 +96,7 @@ class RoomMateTile extends StatelessWidget {
                         bottomRight: Radius.circular(20),
                         topLeft: Radius.circular(20))),
                 child: Text(
-                  "97%",
+                  roomMate.percentage.toString() + ' %',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,

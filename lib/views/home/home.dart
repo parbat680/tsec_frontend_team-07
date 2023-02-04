@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:tsec_app/network/api/fetch_apartments.dart';
-import 'package:tsec_app/views/auth/login_screen.dart';
 import 'package:tsec_app/views/home/appartment.dart';
-import 'package:tsec_app/views/home/profileSetup/steps/preferances.dart';
 import 'package:tsec_app/views/home/roommate.dart';
 import 'package:tsec_app/views/home/search.dart';
 
@@ -44,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      "Roommate App",
+                      "FlatBuddies",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,

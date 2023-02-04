@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Roommate\nApp",
+                "FlatBuddies",
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.w600,

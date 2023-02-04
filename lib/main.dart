@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: LoaderOverlay(
-        child: box.read('auth-token') == null
-            ? LoginScreen()
-            : UserDetailsScreen(),
+        child: box.read('auth-token') == null ? LoginScreen() : HomeScreen(),
       ),
     );
   }

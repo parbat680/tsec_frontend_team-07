@@ -16,7 +16,7 @@ class RoomMateTile extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(
             width: 5,
-            color: Colors.green,
+            color: getColor(),
           ),
           borderRadius: BorderRadius.circular(20)),
       child: Stack(
@@ -91,7 +91,7 @@ class RoomMateTile extends StatelessWidget {
                 margin: EdgeInsets.zero,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: getColor(),
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(20),
                         topLeft: Radius.circular(20))),
@@ -108,5 +108,17 @@ class RoomMateTile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  getColor() {
+    if (roomMate.percentage! >= 90) {
+      return Colors.green;
+    } else if (roomMate.percentage! >= 80) {
+      return Colors.blue;
+    } else if (roomMate.percentage! >= 70) {
+      return Colors.yellow;
+    } else if (roomMate.percentage! < 70) {
+      return Colors.grey;
+    }
   }
 }

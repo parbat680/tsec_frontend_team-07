@@ -18,28 +18,4 @@ class AuthController extends GetxController {
   Future<void> verifyOtp(verificationId, smsCode) async {
     await OtpVerification.verifyOtp(verificationId, smsCode);
   }
-
-  Future<void> UserAuthApi(String phone) async {
-    try {
-      String? number = await FirebaseAuth.instance.currentUser!.phoneNumber;
-      GetStorage box = GetStorage();
-      final response = await http.post(
-        Uri.parse('$URL/user/signup'),
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: jsonEncode({
-          'phone': phone,
-        }),
-      );
-
-      log(response.body);
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        box.write('auth-token', data['token']);
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
 }
